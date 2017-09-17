@@ -2,10 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../data/anime_data.dart';
 
-/// Displays its integer item as 'item N' on a Card whose color is based on
-/// the item's value. The text is displayed in bright green if selected is true.
-/// This widget's height is based on the animation parameter, it varies
-/// from 0 to 128 as the animation varies from 0.0 to 1.0.
 class AnimeListItem extends StatelessWidget {
   const AnimeListItem({
     Key key,
@@ -27,7 +23,7 @@ class AnimeListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.display1;
     if (selected)
-      textStyle = textStyle.copyWith(color: Colors.lightGreenAccent[400]);
+      textStyle = textStyle.copyWith(color: Colors.lightBlueAccent);
     return new Padding(
       padding: const EdgeInsets.all(2.0),
       child: new SizeTransition(
@@ -39,7 +35,7 @@ class AnimeListItem extends StatelessWidget {
           child: new SizedBox(
             height: 128.0,
             child: new Card(
-              color: Colors.indigo,
+              color: Colors.white,
               child: new Center(
                 child: new Text(item.name, style: textStyle),
               ),

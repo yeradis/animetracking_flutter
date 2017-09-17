@@ -12,9 +12,9 @@ class AnimeList extends StatefulWidget {
 
 class _AnimeListState extends State<AnimeList> implements AnimeListViewContract{
   final GlobalKey<AnimatedListState> _listKey = new GlobalKey<AnimatedListState>();
+
   ListModel<Anime> _list;
   Anime _selectedItem;
-
   AnimeListPresenter _presenter;
 
   _AnimeListState() {
@@ -36,14 +36,13 @@ class _AnimeListState extends State<AnimeList> implements AnimeListViewContract{
   @override
   void onLoadAnimeListComplete(List<Anime> items) {
     setState(() {
-      print("anime list fetcheddd.....");
       items.forEach((anime) => _list.insert(_list.length, anime));
     });
   }
 
   @override
   void onLoadAnimeListError() {
-    print("errrroooorrr loadinnnnggggggg anime list");
+    print("error while fetching the anime list");
   }
 
   // Used to build list items that haven't been removed.
@@ -74,12 +73,6 @@ class _AnimeListState extends State<AnimeList> implements AnimeListViewContract{
     );
   }
 
-  // Insert the "next item" into the list model.
-  void _insert() {
-    final int index = _selectedItem == null ? _list.length : _list.indexOf(_selectedItem);
-    //_list.insert(index, _nextItem++);
-  }
-
   // Remove the selected item from the list model.
   void _remove() {
     if (_selectedItem != null) {
@@ -98,14 +91,9 @@ class _AnimeListState extends State<AnimeList> implements AnimeListViewContract{
           title: const Text('Anime list'),
           actions: <Widget>[
             new IconButton(
-              icon: const Icon(Icons.add_circle),
-              onPressed: _insert,
-              tooltip: 'insert a new item',
-            ),
-            new IconButton(
               icon: const Icon(Icons.remove_circle),
               onPressed: _remove,
-              tooltip: 'remove the selected item',
+              tooltip: 'Remove the selected anime',
             ),
           ],
         ),
