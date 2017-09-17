@@ -3,6 +3,7 @@
 A simple [Flutter](https://flutter.io) app
 
 >>see screenshots at the bottom
+>>magic happens at [lib/](animetracking_flutter/anime_tracking/lib/) folder
 
 Right now, this simple add can:
 
@@ -10,7 +11,7 @@ Right now, this simple add can:
 - Select and remove items from the list
 - Navigation drawer menu with a clickable header
 
-Current data is a mocked one, because of an existing value, the `trick` happens at [nime_data_injection.dart](/anime_tracking/lib/data/anime_data_injection.dart)
+Current data is a mocked one, because of an existing value, the `trick` happens at [anime_data_injection.dart](/anime_tracking/lib/data/anime_data_injection.dart)
 
 Current repository settings is available at [main.dart](/anime_tracking/lib/main.dart) in this way:
 
