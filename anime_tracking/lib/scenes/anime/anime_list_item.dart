@@ -67,7 +67,7 @@ class AnimeListItem extends StatelessWidget {
       children: [
         coverImage,
         new Container(
-          margin: const EdgeInsets.all(10.0),
+          margin: const EdgeInsets.all(8.0),
           child: infoSection,
           ),
       ],
