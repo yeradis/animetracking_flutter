@@ -6,11 +6,11 @@ class AnimeTrackingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Anime List',
       theme: new ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: new AnimeListPage(title: 'Flutter Demo Home Page'),
+      home: new AnimeList(),
     );
   }
 }

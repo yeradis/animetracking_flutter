@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'anime_data.dart';
 import 'anime_data_repository.dart';
 
-class RandomUserRepository implements AnimeRepository {
+class AnimeListRepository implements AnimeRepository {
 
   static const _kAnimeEndpointUrl = 'http://yeradis.com/animelist.json';
   final JsonDecoder _decoder = new JsonDecoder();
