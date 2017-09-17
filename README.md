@@ -2,8 +2,7 @@
 
 A simple [Flutter](https://flutter.io) app
 
-![list](/screenshots/shot1.png)
-![menu](/screenshots/shot2.png)
+>>see screenshots at the bottom
 
 Right now, this simple add can:
 
@@ -60,3 +59,6 @@ The header image in the menu, its also declared there
  assets:
     - lib/assets/drawer_header_background.png
 ```
+
+![list](/screenshots/shot1.png)
+![menu](/screenshots/shot2.png)
