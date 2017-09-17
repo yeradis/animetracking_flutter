@@ -5,7 +5,11 @@ import '../../data/anime_data.dart';
 import 'anime_list_presenter.dart';
 import 'anime_list_item.dart';
 
+import '../../widget/navigation_drawer.dart';
+
 class AnimeList extends StatefulWidget {
+  static const String routeName = '/';
+
   @override
   _AnimeListState createState() => new _AnimeListState();
 }
@@ -95,8 +99,9 @@ class _AnimeListState extends State<AnimeList> implements AnimeListViewContract{
               onPressed: _remove,
               tooltip: 'Remove the selected anime',
             ),
-          ],
+          ]
         ),
+        drawer: new NavigationDrawer(),
         body: new Padding(
           padding: const EdgeInsets.all(16.0),
           child: new AnimatedList(

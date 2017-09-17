@@ -2,6 +2,7 @@ name: anime_tracking
 description: A new Flutter project.
 
 dependencies:
+  url_launcher: ^0.4.0
   http: '>=0.11.3+12'
   flutter:
     sdk: flutter
@@ -16,7 +17,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the Icons class.
@@ -26,6 +26,9 @@ flutter:
   # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
+
+  assets:
+    - lib/assets/drawer_header_background.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/.

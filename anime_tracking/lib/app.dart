@@ -10,7 +10,9 @@ class AnimeTrackingApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: new AnimeList(),
+      routes: {
+        AnimeList.routeName: (BuildContext context) => new AnimeList(),
+      },
     );
   }
 }
