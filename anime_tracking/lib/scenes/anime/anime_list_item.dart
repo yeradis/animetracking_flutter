@@ -21,6 +21,52 @@ class AnimeListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    Image coverSection = new Image.asset(
+      'lib/assets/drawer_header_background.png',
+      height: 128.0,
+      fit: BoxFit.fitWidth,
+    );
+
+    Row titleSection = new Row(
+        children: [
+          new Expanded(
+            child: new Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                new Container(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: new Text(
+                    item.name,
+                    style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                new Text(
+                  item.plot,
+                  style: new TextStyle(
+                    color: Colors.grey[500],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          new Icon(
+            Icons.star,
+            color: Colors.red[500],
+          ),
+          new Text(item.rating),
+        ],
+      );
+
+    ListView content = new ListView(
+      children: [
+        coverSection,
+        titleSection
+      ],
+    );
+
     TextStyle textStyle = Theme.of(context).textTheme.display1;
     if (selected)
       textStyle = textStyle.copyWith(color: Colors.lightBlueAccent);
@@ -33,12 +79,10 @@ class AnimeListItem extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           onTap: onTap,
           child: new SizedBox(
-            height: 128.0,
+            height: 190.0,
             child: new Card(
               color: Colors.white,
-              child: new Center(
-                child: new Text(item.name, style: textStyle),
-              ),
+              child: content,
             ),
           ),
         ),
