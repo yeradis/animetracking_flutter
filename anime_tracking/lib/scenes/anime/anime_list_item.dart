@@ -1,25 +1,26 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../../data/anime_data.dart';
 
 /// Displays its integer item as 'item N' on a Card whose color is based on
 /// the item's value. The text is displayed in bright green if selected is true.
 /// This widget's height is based on the animation parameter, it varies
 /// from 0 to 128 as the animation varies from 0.0 to 1.0.
-class CardItem extends StatelessWidget {
-  const CardItem({
+class AnimeListItem extends StatelessWidget {
+  const AnimeListItem({
     Key key,
     @required this.animation,
     this.onTap,
     @required this.item,
     this.selected: false
   }) : assert(animation != null),
-        assert(item != null && item >= 0),
+        assert(item != null),
         assert(selected != null),
         super(key: key);
 
   final Animation<double> animation;
   final VoidCallback onTap;
-  final int item;
+  final Anime item;
   final bool selected;
 
   @override
@@ -38,9 +39,9 @@ class CardItem extends StatelessWidget {
           child: new SizedBox(
             height: 128.0,
             child: new Card(
-              color: Colors.primaries[item % Colors.primaries.length],
+              color: Colors.indigo,
               child: new Center(
-                child: new Text('Item $item', style: textStyle),
+                child: new Text(item.name, style: textStyle),
               ),
             ),
           ),

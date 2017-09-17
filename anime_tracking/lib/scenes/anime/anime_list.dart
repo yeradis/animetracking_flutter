@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../data/anime_data.dart';
 import 'anime_list_presenter.dart';
-import 'anime_item.dart';
+import 'anime_list_item.dart';
 
 class AnimeList extends StatefulWidget {
   @override
@@ -12,13 +12,10 @@ class AnimeList extends StatefulWidget {
 
 class _AnimeListState extends State<AnimeList> implements AnimeListViewContract{
   final GlobalKey<AnimatedListState> _listKey = new GlobalKey<AnimatedListState>();
-  ListModel<int> _list;
-  int _selectedItem;
-  int _nextItem; // The next item inserted when the user presses the '+' button.
+  ListModel<Anime> _list;
+  Anime _selectedItem;
 
   AnimeListPresenter _presenter;
-  List<Anime> _animeList;
-  bool _IsSearching;
 
   _AnimeListState() {
     _presenter = new AnimeListPresenter(this);
@@ -27,22 +24,20 @@ class _AnimeListState extends State<AnimeList> implements AnimeListViewContract{
   @override
   void initState() {
     super.initState();
-    _list = new ListModel<int>(
+
+    _list = new ListModel<Anime>(
       listKey: _listKey,
-      initialItems: <int>[0, 1, 2],
+      initialItems: <Anime>[],
       removedItemBuilder: _buildRemovedItem,
     );
-    _nextItem = 3;
-
-    _IsSearching = true;
     _presenter.loadAnimeList();
   }
 
   @override
   void onLoadAnimeListComplete(List<Anime> items) {
     setState(() {
-      _animeList = items;
-      _IsSearching = false;
+      print("anime list fetcheddd.....");
+      items.forEach((anime) => _list.insert(_list.length, anime));
     });
   }
 
@@ -53,7 +48,7 @@ class _AnimeListState extends State<AnimeList> implements AnimeListViewContract{
 
   // Used to build list items that haven't been removed.
   Widget _buildItem(BuildContext context, int index, Animation<double> animation) {
-    return new CardItem(
+    return new AnimeListItem(
       animation: animation,
       item: _list[index],
       selected: _selectedItem == _list[index],
@@ -70,8 +65,8 @@ class _AnimeListState extends State<AnimeList> implements AnimeListViewContract{
   // completed (even though it's gone as far this ListModel is concerned).
   // The widget will be used by the [AnimatedListState.removeItem] method's
   // [AnimatedListRemovedItemBuilder] parameter.
-  Widget _buildRemovedItem(int item, BuildContext context, Animation<double> animation) {
-    return new CardItem(
+  Widget _buildRemovedItem(Anime item, BuildContext context, Animation<double> animation) {
+    return new AnimeListItem(
       animation: animation,
       item: item,
       selected: false,
@@ -82,7 +77,7 @@ class _AnimeListState extends State<AnimeList> implements AnimeListViewContract{
   // Insert the "next item" into the list model.
   void _insert() {
     final int index = _selectedItem == null ? _list.length : _list.indexOf(_selectedItem);
-    _list.insert(index, _nextItem++);
+    //_list.insert(index, _nextItem++);
   }
 
   // Remove the selected item from the list model.
