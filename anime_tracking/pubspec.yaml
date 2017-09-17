@@ -2,6 +2,7 @@ name: anime_tracking
 description: A new Flutter project.
 
 dependencies:
+  http: '>=0.11.3+12'
   flutter:
     sdk: flutter
 
