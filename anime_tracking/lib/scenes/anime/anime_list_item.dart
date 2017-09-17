@@ -63,7 +63,10 @@ class AnimeListItem extends StatelessWidget {
     ListView content = new ListView(
       children: [
         coverSection,
-        titleSection
+        new Container(
+          margin: const EdgeInsets.all(8.0),
+          child: titleSection,
+          ),
       ],
     );
 
