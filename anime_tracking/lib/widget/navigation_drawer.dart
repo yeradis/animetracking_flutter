@@ -8,8 +8,6 @@ class NavigationDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     // onTap launch the page associated with the 'routeName'
     // see app.dart, there the routes are declared and linked to the route path
     // this one
@@ -30,9 +28,7 @@ class NavigationDrawer extends StatelessWidget {
 
     return new Drawer(
         child: new ListView(
-            children: <Widget>[_createHeader(),itemList, itemAbout]
-        )
-    );
+            children: <Widget>[_createHeader(), itemList, itemAbout]));
   }
 
   Widget _createHeader() {
@@ -40,7 +36,8 @@ class NavigationDrawer extends StatelessWidget {
         padding: const EdgeInsets.all(0.0),
         decoration: new BoxDecoration(color: Colors.white),
         child: new Stack(children: <Widget>[
-          new Image.asset('lib/assets/drawer_header_background.png', fit: BoxFit.fitWidth),
+          new Image.asset('lib/assets/drawer_header_background.png',
+              fit: BoxFit.fitWidth),
           new Positioned(
               bottom: 12.0,
               left: 16.0,
@@ -49,11 +46,7 @@ class NavigationDrawer extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 20.0,
                       fontWeight: FontWeight.w300))),
-          new GestureDetector(
-              onTap: () =>
-              launch('http://www.yeradis.com')
-          )
+          new GestureDetector(onTap: () => launch('http://www.yeradis.com'))
         ]));
   }
-
 }

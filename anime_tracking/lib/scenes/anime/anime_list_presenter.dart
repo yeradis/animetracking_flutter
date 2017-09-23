@@ -4,6 +4,7 @@ import '../../data/anime_data_injection.dart';
 
 abstract class AnimeListViewContract {
   void onLoadAnimeListComplete(List<Anime> items);
+
   void onLoadAnimeListError();
 }
 
@@ -11,19 +12,18 @@ class AnimeListPresenter {
   AnimeListViewContract _view;
   AnimeRepository _repository;
 
-  AnimeListPresenter(this._view){
+  AnimeListPresenter(this._view) {
     _repository = new AnimeListInjector().animeRepository;
   }
 
-  void loadAnimeList(){
+  void loadAnimeList() {
     assert(_view != null);
-    print("loadinnnnggggggg anime list");
-    _repository.fetch()
+    _repository
+        .fetch()
         .then((animeList) => _view.onLoadAnimeListComplete(animeList))
         .catchError((onError) {
       print(onError);
       _view.onLoadAnimeListError();
     });
   }
-
 }

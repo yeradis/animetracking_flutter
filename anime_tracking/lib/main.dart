@@ -6,5 +6,3 @@ void main() {
   AnimeListInjector.configure(Origin.MOCK);
   runApp(new AnimeTrackingApp());
 }
-
-

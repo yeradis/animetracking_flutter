@@ -14,8 +14,10 @@ class AnimeList extends StatefulWidget {
   _AnimeListState createState() => new _AnimeListState();
 }
 
-class _AnimeListState extends State<AnimeList> implements AnimeListViewContract{
-  final GlobalKey<AnimatedListState> _listKey = new GlobalKey<AnimatedListState>();
+class _AnimeListState extends State<AnimeList>
+    implements AnimeListViewContract {
+  final GlobalKey<AnimatedListState> _listKey =
+      new GlobalKey<AnimatedListState>();
 
   ListModel<Anime> _list;
   Anime _selectedItem;
@@ -50,7 +52,8 @@ class _AnimeListState extends State<AnimeList> implements AnimeListViewContract{
   }
 
   // Used to build list items that haven't been removed.
-  Widget _buildItem(BuildContext context, int index, Animation<double> animation) {
+  Widget _buildItem(
+      BuildContext context, int index, Animation<double> animation) {
     return new AnimeListItem(
       animation: animation,
       item: _list[index],
@@ -68,7 +71,8 @@ class _AnimeListState extends State<AnimeList> implements AnimeListViewContract{
   // completed (even though it's gone as far this ListModel is concerned).
   // The widget will be used by the [AnimatedListState.removeItem] method's
   // [AnimatedListRemovedItemBuilder] parameter.
-  Widget _buildRemovedItem(Anime item, BuildContext context, Animation<double> animation) {
+  Widget _buildRemovedItem(
+      Anime item, BuildContext context, Animation<double> animation) {
     return new AnimeListItem(
       animation: animation,
       item: item,
@@ -91,16 +95,13 @@ class _AnimeListState extends State<AnimeList> implements AnimeListViewContract{
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: new Scaffold(
-        appBar: new AppBar(
-          title: const Text('Anime list'),
-          actions: <Widget>[
-            new IconButton(
-              icon: const Icon(Icons.remove_circle),
-              onPressed: _remove,
-              tooltip: 'Remove the selected anime',
-            ),
-          ]
-        ),
+        appBar: new AppBar(title: const Text('Anime list'), actions: <Widget>[
+          new IconButton(
+            icon: const Icon(Icons.remove_circle),
+            onPressed: _remove,
+            tooltip: 'Remove the selected anime',
+          ),
+        ]),
         drawer: new NavigationDrawer(),
         body: new Padding(
           padding: const EdgeInsets.all(16.0),
@@ -129,7 +130,8 @@ class ListModel<E> {
     @required this.listKey,
     @required this.removedItemBuilder,
     Iterable<E> initialItems,
-  }) : assert(listKey != null),
+  })
+      : assert(listKey != null),
         assert(removedItemBuilder != null),
         _items = new List<E>.from(initialItems ?? <E>[]);
 
@@ -147,7 +149,8 @@ class ListModel<E> {
   E removeAt(int index) {
     final E removedItem = _items.removeAt(index);
     if (removedItem != null) {
-      _animatedList.removeItem(index, (BuildContext context, Animation<double> animation) {
+      _animatedList.removeItem(index,
+          (BuildContext context, Animation<double> animation) {
         return removedItemBuilder(removedItem, context, animation);
       });
     }
@@ -155,6 +158,8 @@ class ListModel<E> {
   }
 
   int get length => _items.length;
+
   E operator [](int index) => _items[index];
+
   int indexOf(E item) => _items.indexOf(item);
 }
