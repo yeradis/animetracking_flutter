@@ -14,10 +14,8 @@ class AnimeList extends StatefulWidget {
   _AnimeListState createState() => new _AnimeListState();
 }
 
-class _AnimeListState extends State<AnimeList>
-    implements AnimeListViewContract {
-  final GlobalKey<AnimatedListState> _listKey =
-      new GlobalKey<AnimatedListState>();
+class _AnimeListState extends State<AnimeList> with TickerProviderStateMixin implements AnimeListViewContract {
+  final GlobalKey<AnimatedListState> _listKey = new GlobalKey<AnimatedListState>();
 
   ListModel<Anime> _list;
   Anime _selectedItem;
@@ -42,6 +40,7 @@ class _AnimeListState extends State<AnimeList>
   @override
   void onLoadAnimeListComplete(List<Anime> items) {
     setState(() {
+      _list.clear();
       items.forEach((anime) => _list.insert(_list.length, anime));
     });
   }
@@ -71,10 +70,9 @@ class _AnimeListState extends State<AnimeList>
   // completed (even though it's gone as far this ListModel is concerned).
   // The widget will be used by the [AnimatedListState.removeItem] method's
   // [AnimatedListRemovedItemBuilder] parameter.
-  Widget _buildRemovedItem(
-      Anime item, BuildContext context, Animation<double> animation) {
+  Widget _buildRemovedItem(Anime item, BuildContext context, Animation<double> animation) {
     return new AnimeListItem(
-      animation: animation,
+      animation: new AnimationController(duration: new Duration(seconds: 0), vsync: this),
       item: item,
       selected: false,
       // No gesture detector here: we don't want removed items to be interactive.
@@ -82,13 +80,8 @@ class _AnimeListState extends State<AnimeList>
   }
 
   // Remove the selected item from the list model.
-  void _remove() {
-    if (_selectedItem != null) {
-      _list.removeAt(_list.indexOf(_selectedItem));
-      setState(() {
-        _selectedItem = null;
-      });
-    }
+  void _reloadList() {
+    _presenter.loadAnimeList();
   }
 
   @override
@@ -97,9 +90,9 @@ class _AnimeListState extends State<AnimeList>
       home: new Scaffold(
         appBar: new AppBar(title: const Text('Anime list'), actions: <Widget>[
           new IconButton(
-            icon: const Icon(Icons.remove_circle),
-            onPressed: _remove,
-            tooltip: 'Remove the selected anime',
+            icon: const Icon(Icons.update),
+            onPressed: _reloadList,
+            tooltip: 'Reload list',
           ),
         ]),
         drawer: new NavigationDrawer(),
@@ -130,10 +123,9 @@ class ListModel<E> {
     @required this.listKey,
     @required this.removedItemBuilder,
     Iterable<E> initialItems,
-  })
-      : assert(listKey != null),
-        assert(removedItemBuilder != null),
-        _items = new List<E>.from(initialItems ?? <E>[]);
+  }): assert(listKey != null),
+      assert(removedItemBuilder != null),
+      _items = new List<E>.from(initialItems ?? <E>[]);
 
   final GlobalKey<AnimatedListState> listKey;
   final dynamic removedItemBuilder;
@@ -157,9 +149,27 @@ class ListModel<E> {
     return removedItem;
   }
 
+  void remove(E item) {
+    if (item != null){
+      var index = _items.indexOf(item);
+      if (_items.remove(item)) {
+        _animatedList.removeItem(index,(BuildContext context, Animation<double> animation) {
+            return removedItemBuilder(item, context, animation);
+        });
+      }
+    }
+  }
+
   int get length => _items.length;
 
   E operator [](int index) => _items[index];
 
   int indexOf(E item) => _items.indexOf(item);
+
+  void clear(){
+    //first lets get a copy before removing to avoid
+    //Concurrent modification during iteration errors
+    var toRemove = _items.toList();
+    toRemove.forEach((item) => remove(item));
+  }
 }
