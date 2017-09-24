@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../data/anime_data.dart';
+import '../../routes.dart';
+import 'anime_details.dart';
 
 class AnimeListItem extends StatelessWidget {
-  const AnimeListItem(
+   AnimeListItem(
       {Key key,
       @required this.animation,
-      this.onTap,
       @required this.item,
       this.selected: false})
       : assert(animation != null),
@@ -15,12 +16,13 @@ class AnimeListItem extends StatelessWidget {
         super(key: key);
 
   final Animation<double> animation;
-  final VoidCallback onTap;
   final Anime item;
   final bool selected;
+  ThemeData themeData;
 
   @override
   Widget build(BuildContext context) {
+    themeData = Theme.of(context);
     return new Padding(
       padding: const EdgeInsets.all(2.0),
       child: new SizeTransition(
@@ -28,7 +30,9 @@ class AnimeListItem extends StatelessWidget {
         sizeFactor: animation,
         child: new GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: onTap,
+          onTap: (){
+            _handleTap(context);
+          },
           child: new SizedBox(
             height: 190.0,
             child: new Card(
@@ -46,23 +50,22 @@ class AnimeListItem extends StatelessWidget {
       constraints: new BoxConstraints.expand(),
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[_coverSection(), _detailsSection()],
+        children: <Widget>[_coverSection, _detailsSection],
       ),
     );
   }
 
-  Widget _detailsSection() {
-    return new Container(
-      margin: const EdgeInsets.all(10.0),
-      child: new Row(
-        children: [
-          _titleAndSummary(),
-          new Container(width: 5.0),
-          _rating(),
-        ],
-      ),
-    );
-  }
+  Widget get _detailsSection =>
+      new Container(
+        margin: const EdgeInsets.all(10.0),
+        child: new Row(
+          children: [
+            _titleAndSummary,
+            new Container(width: 5.0),
+            _rating(),
+          ],
+        ),
+      );
 
   Widget _rating() {
     return new Row(
@@ -76,26 +79,25 @@ class AnimeListItem extends StatelessWidget {
     );
   }
 
-  Widget _coverSection() {
-    return new Row(children: <Widget>[
-      new Expanded(
-        child: _cover(height: 110.0),
-        flex: 1,
-      ),
-    ]);
-  }
+  Widget get _coverSection =>
+      new Row(children: <Widget>[
+        new Expanded(
+          child: _cover(height: 110.0),
+          flex: 1,
+        ),
+      ]);
 
-  Widget _titleAndSummary() {
-    return new Expanded(
-      child: new Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _title(),
-          _summary(),
-        ],
-      ),
-    );
-  }
+
+  Widget get _titleAndSummary =>
+      new Expanded(
+        child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _title,
+            _plot,
+          ],
+        ),
+      );
 
   Widget _cover({double height}) {
     NetworkImage networkImage = new NetworkImage(item.cover);
@@ -104,8 +106,7 @@ class AnimeListItem extends StatelessWidget {
     return coverImage;
   }
 
-  Widget _title() {
-    return new Container(
+  Widget get _title => new Container(
       padding: const EdgeInsets.only(bottom: 4.0),
       child: new Text(
         item.name,
@@ -114,14 +115,20 @@ class AnimeListItem extends StatelessWidget {
         ),
       ),
     );
-  }
 
-  Widget _summary() {
-    return new Text(
+  Widget get _plot => new Text(
       item.plot,
+      maxLines: 2,
+      textAlign: TextAlign.left,
+      overflow: TextOverflow.ellipsis,
       style: new TextStyle(
         color: Colors.grey,
       ),
     );
+
+  void _handleTap(BuildContext context) {
+    Navigator.push(context, new AppRoute(
+      builder: (BuildContext context) => new AnimeDetails(anime: item),
+    ));
   }
 }

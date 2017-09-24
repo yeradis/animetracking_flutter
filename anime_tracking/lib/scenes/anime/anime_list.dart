@@ -14,7 +14,7 @@ class AnimeList extends StatefulWidget {
   _AnimeListState createState() => new _AnimeListState();
 }
 
-class _AnimeListState extends State<AnimeList> with TickerProviderStateMixin implements AnimeListViewContract {
+class _AnimeListState extends State<AnimeList>  with TickerProviderStateMixin implements AnimeListViewContract {
   final GlobalKey<AnimatedListState> _listKey = new GlobalKey<AnimatedListState>();
 
   ListModel<Anime> _list;
@@ -34,6 +34,7 @@ class _AnimeListState extends State<AnimeList> with TickerProviderStateMixin imp
       initialItems: <Anime>[],
       removedItemBuilder: _buildRemovedItem,
     );
+
     _presenter.loadAnimeList();
   }
 
@@ -51,17 +52,11 @@ class _AnimeListState extends State<AnimeList> with TickerProviderStateMixin imp
   }
 
   // Used to build list items that haven't been removed.
-  Widget _buildItem(
-      BuildContext context, int index, Animation<double> animation) {
+  Widget _buildItem(BuildContext context, int index, Animation<double> animation) {
     return new AnimeListItem(
       animation: animation,
       item: _list[index],
       selected: _selectedItem == _list[index],
-      onTap: () {
-        setState(() {
-          _selectedItem = _selectedItem == _list[index] ? null : _list[index];
-        });
-      },
     );
   }
 
@@ -72,7 +67,8 @@ class _AnimeListState extends State<AnimeList> with TickerProviderStateMixin imp
   // [AnimatedListRemovedItemBuilder] parameter.
   Widget _buildRemovedItem(Anime item, BuildContext context, Animation<double> animation) {
     return new AnimeListItem(
-      animation: new AnimationController(duration: new Duration(seconds: 0), vsync: this),
+      animation: new AnimationController(
+          duration: new Duration(seconds: 0), vsync: this),
       item: item,
       selected: false,
       // No gesture detector here: we don't want removed items to be interactive.
@@ -88,25 +84,29 @@ class _AnimeListState extends State<AnimeList> with TickerProviderStateMixin imp
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: new Scaffold(
-        appBar: new AppBar(title: const Text('Anime list'), actions: <Widget>[
-          new IconButton(
-            icon: const Icon(Icons.update),
-            onPressed: _reloadList,
-            tooltip: 'Reload list',
-          ),
-        ]),
+        appBar: new AppBar(
+            title: const Text('Anime list'),
+            actions: <Widget>[
+              new IconButton(
+                icon: const Icon(Icons.update),
+                onPressed: _reloadList,
+                tooltip: 'Reload list',
+              ),
+            ]),
         drawer: new NavigationDrawer(),
-        body: new Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: new AnimatedList(
-            key: _listKey,
-            initialItemCount: _list.length,
-            itemBuilder: _buildItem,
-          ),
-        ),
+        body: body,
       ),
     );
   }
+
+  Padding get body => new Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: new AnimatedList(
+          key: _listKey,
+          initialItemCount: _list.length,
+          itemBuilder: _buildItem,
+        ),
+      );
 }
 
 /// Keeps a Dart List in sync with an AnimatedList.
@@ -123,9 +123,10 @@ class ListModel<E> {
     @required this.listKey,
     @required this.removedItemBuilder,
     Iterable<E> initialItems,
-  }): assert(listKey != null),
-      assert(removedItemBuilder != null),
-      _items = new List<E>.from(initialItems ?? <E>[]);
+  })
+      : assert(listKey != null),
+        assert(removedItemBuilder != null),
+        _items = new List<E>.from(initialItems ?? <E>[]);
 
   final GlobalKey<AnimatedListState> listKey;
   final dynamic removedItemBuilder;
@@ -150,11 +151,12 @@ class ListModel<E> {
   }
 
   void remove(E item) {
-    if (item != null){
+    if (item != null) {
       var index = _items.indexOf(item);
       if (_items.remove(item)) {
-        _animatedList.removeItem(index,(BuildContext context, Animation<double> animation) {
-            return removedItemBuilder(item, context, animation);
+        _animatedList.removeItem(index,
+            (BuildContext context, Animation<double> animation) {
+          return removedItemBuilder(item, context, animation);
         });
       }
     }
@@ -166,7 +168,7 @@ class ListModel<E> {
 
   int indexOf(E item) => _items.indexOf(item);
 
-  void clear(){
+  void clear() {
     //first lets get a copy before removing to avoid
     //Concurrent modification during iteration errors
     var toRemove = _items.toList();

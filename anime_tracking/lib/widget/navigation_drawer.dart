@@ -26,9 +26,15 @@ class NavigationDrawer extends StatelessWidget {
       onTap: () => launch('http://www.yeradis.com'),
     );
 
+    final Widget itemContacts = new ListTile(
+      dense: true,
+      title: const Text('Contacts'),
+      onTap: () => Navigator.popAndPushNamed(context, "/contacts"),
+    );
+
     return new Drawer(
         child: new ListView(
-            children: <Widget>[_createHeader(), itemList, itemAbout]));
+            children: <Widget>[_createHeader(), itemList, itemAbout, itemContacts]));
   }
 
   Widget _createHeader() {

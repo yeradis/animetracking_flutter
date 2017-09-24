@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'scenes/anime/anime_list.dart';
+import 'routes.dart';
 
 class AnimeTrackingApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -7,12 +7,11 @@ class AnimeTrackingApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Anime List',
-      theme: new ThemeData(
-        primarySwatch: Colors.indigo,
+      theme:  new ThemeData(
+        brightness: Brightness.light,
+        platform: Theme.of(context).platform,
       ),
-      routes: {
-        AnimeList.routeName: (BuildContext context) => new AnimeList(),
-      },
+      routes: RoutesBuilder.routes,
     );
   }
 }
