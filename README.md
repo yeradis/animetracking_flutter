@@ -19,13 +19,17 @@ Current repository settings is available at [main.dart](/anime_tracking/lib/main
   AnimeListInjector.configure(Origin.MOCK);
 ```
 
+Very simple concept with a list and details, also a side menu
 There is only one view, but its using the Flutter's `routing` and `navigation` feature.
 
-See at [app.dart](/anime_tracking/lib/app.dart), something like:
+See at [routes.dart](/anime_tracking/lib/routes.dart), something like:
 
 ```dart
-routes: {
-    AnimeList.routeName: (BuildContext context) => new AnimeList(),
+    static Map<String, WidgetBuilder> get routes =>  {
+        '/': (BuildContext context) => new AnimeList(),
+        '/favorites': (BuildContext context) => new AnimeList(),
+        '/watching': (BuildContext context) => new AnimeList()
+    };
 },
 ```
 
@@ -62,4 +66,5 @@ The header image in the menu, its also declared there
 ```
 
 ![list](/screenshots/shot1.png)
+![details](/screenshots/shot3.png)
 ![menu](/screenshots/shot2.png)
