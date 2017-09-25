@@ -8,7 +8,8 @@ A simple [Flutter](https://flutter.io) app
 Right now, this simple app can:
 
 - Load/re-load a list from (internet | mock data)
-- Show details for the selected item
+- Show details for the selected item 
+  this view its using Slivers... making it easy to have a flexible navigation bar where to cover image turns into the classic navigation bar while scrolling
 - Navigation drawer menu (very ugly) with some options and a clickable header
 
 Current data is a mocked one, because of an existing value, the `trick` happens at [anime_data_injection.dart](/anime_tracking/lib/data/anime_data_injection.dart)
@@ -19,7 +20,6 @@ Current repository data source settings is available at [main.dart](/anime_track
   AnimeListInjector.configure(Origin.MOCK);
 ```
 
-Very simple concept with a list and details, also a side menu
 There are two views, but one of them is using the Flutter's `routing` and `navigation` feature.
 
 Maybe in other update will add the details here too using parameters at the route
