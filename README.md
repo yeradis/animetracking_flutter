@@ -5,22 +5,24 @@ A simple [Flutter](https://flutter.io) app
 >>see screenshots at the bottom
 >>magic happens at [lib/](animetracking_flutter/anime_tracking/lib/) folder
 
-Right now, this simple add can:
+Right now, this simple app can:
 
-- Load a list from (internet | mock data)
-- Select and remove items from the list
-- Navigation drawer menu with a clickable header
+- Load/re-load a list from (internet | mock data)
+- Show details for the selected item
+- Navigation drawer menu (very ugly) with some options and a clickable header
 
 Current data is a mocked one, because of an existing value, the `trick` happens at [anime_data_injection.dart](/anime_tracking/lib/data/anime_data_injection.dart)
 
-Current repository settings is available at [main.dart](/anime_tracking/lib/main.dart) in this way:
+Current repository data source settings is available at [main.dart](/anime_tracking/lib/main.dart) in this way:
 
 ```dart
   AnimeListInjector.configure(Origin.MOCK);
 ```
 
 Very simple concept with a list and details, also a side menu
-There is only one view, but its using the Flutter's `routing` and `navigation` feature.
+There are two views, but one of them is using the Flutter's `routing` and `navigation` feature.
+
+Maybe in other update will add the details here too using parameters at the route
 
 See at [routes.dart](/anime_tracking/lib/routes.dart), something like:
 
@@ -66,5 +68,7 @@ The header image in the menu, its also declared there
 ```
 
 ![list](/screenshots/shot1.png)
+
 ![details](/screenshots/shot3.png)
+
 ![menu](/screenshots/shot2.png)
